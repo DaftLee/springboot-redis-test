@@ -16,9 +16,13 @@ public class SpringbootRedisTestApplicationTests {
     @Test
     public void contextLoads() {
         Student s1= userService.getStudentById(1);
+        userService.deleteStudentById(1);
         Student s2 = userService.getStudentById(1);
-        System.out.println(s1);
-        System.out.println(s2);
+        userService.updateStudentById(1);
+        Student s3 = userService.getStudentById(1);
+        System.out.println("s1"+s1);
+        System.out.println("s2"+s2);
+        System.out.println("s3"+s3);
     }
 
 }
