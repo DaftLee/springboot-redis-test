@@ -15,6 +15,7 @@ public class SpringbootRedisTestApplicationTests {
     UserService userService;
     @Test
     public void contextLoads() {
+        /*
         Student s1= userService.getStudentById(1);
         userService.deleteStudentById(1);
         Student s2 = userService.getStudentById(1);
@@ -23,6 +24,16 @@ public class SpringbootRedisTestApplicationTests {
         System.out.println("s1"+s1);
         System.out.println("s2"+s2);
         System.out.println("s3"+s3);
+        */
+
+        Student s4 = new Student();
+        s4.setId(132);
+        s4.setName("ling");
+        userService.setStudentById2(s4);
+        System.out.println("=====================");
+        Student s5 = userService.getStudentById2(132);
+        System.out.println(s5);
+
     }
 
 }

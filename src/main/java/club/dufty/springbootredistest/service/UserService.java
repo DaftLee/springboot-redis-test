@@ -4,10 +4,14 @@ import club.dufty.springbootredistest.pojo.Student;
 import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +24,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    @Autowired
+    private RedisTemplate redisTemplate = new RedisTemplate();
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
     /**
      * 查询
      * @param id
@@ -57,4 +65,24 @@ public class UserService {
         logger.error("更新用户成功");
         return student;
     }
+
+    /**
+     * 直接存
+     * @param s
+     */
+    public void setStudentById2(Student s){
+        ValueOperations<Integer,Student> valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(s.getId(),s);
+    }
+
+    /**
+     * 直接取
+     * @param id
+     * @return
+     */
+    public Student getStudentById2(int id){
+        ValueOperations<Integer,Student> valueOperations = redisTemplate.opsForValue();
+        return valueOperations.get(id);
+    }
+
 }
